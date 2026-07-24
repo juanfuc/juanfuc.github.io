@@ -1,0 +1,53 @@
+/* Contenedor estándar de las páginas interiores (perfil, experiencia, publicaciones y sus
+   subsecciones, programación). La portada NO usa esta clase: su grilla tiene su propio
+   contenedor local (`.home-grid` en src/routes/+page.svelte) para no heredar estas reglas. */
+.container {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  margin: 0 auto;
+  background-color: #e6ebf1;
+  color: #054f6d;
+  text-align: justify;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+/* Tarjeta de lista (imagen o iframe + contenido, en fila) usada por Artículos, Libros,
+   Capítulos y Programación. Nombres distintos de `.card`/`.card-image`/`.card-content` a
+   propósito: la portada, Publicaciones y Experiencia mantienen sus propias variantes
+   locales con esos nombres y no deben heredar estas reglas. */
+.list-card {
+  display: flex;
+  overflow: hidden;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  scroll-snap-align: start;
+}
+
+.list-card-media {
+  flex: 1;
+  padding: 10px;
+}
+
+.list-card-body {
+  flex: 2;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .list-card {
+    flex-direction: column;
+    height: auto;
+    padding: 3vw;
+  }
+
+  .list-card-media,
+  .list-card-body {
+    flex: 1;
+    width: 100%;
+  }
+}

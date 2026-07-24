@@ -20,6 +20,8 @@ Acordadas y vinculantes para el trabajo. (Se corresponden con los acuerdos del `
 10. **El destino de producción será `https://juanfuc.github.io/`.** (R01)
 11. **Vercel se conserva temporalmente como respaldo** hasta verificar que GitHub Pages sirve correctamente el sitio. (R01)
 12. **R01 incluye la estabilización estructural necesaria antes del rediseño visual** (grilla confinada a portada, revelado del perfil, estabilidad de sesión, deuda de CSS/accesibilidad/código muerto), ampliando lo que su documento de ronda tenía como «fuera de alcance» para código muerto y accesibilidad avanzada. (R01)
+13. **La estabilidad del orden de la grilla se implementa con una semilla en `sessionStorage`**, persistente durante recargas de la misma pestaña y renovable en una sesión nueva. (R01)
+14. **GitHub Pages se publica mediante `adapter-static` y GitHub Actions**, con salida en `build/` y fallback `404.html`. (R01)
 
 ---
 
@@ -32,7 +34,6 @@ Ideas y direcciones **no cerradas**. No se implementan hasta ser validadas; cuan
 
 ### Grilla
 - **Franja contextual de la grilla.** Pendiente decidir si la portada incorpora una **franja/banda contextual** (texto breve, encabezado o marco que sitúe la grilla como índice de descubrimiento) y, en tal caso, su contenido, posición y relación con la grilla.
-- **Mecanismo exacto de estabilidad por sesión.** Está acordado *que* debe ser estable por sesión; el **cómo** (semilla en `sessionStorage`, orden fijado en el primer render, etc.) está pendiente.
 
 ### Sistema visual
 - **Sistema preciso de líneas.** Uso de líneas/reglas como recurso estructural (inspiración parcial en *Caja Negra*): grosor, color, dónde aplican (separadores, marcos, encabezados). Pendiente de definición.
@@ -45,7 +46,7 @@ Ideas y direcciones **no cerradas**. No se implementan hasta ser validadas; cuan
 ### Otros temas abiertos (registro, aún sin acordar)
 - Estrategia para hacer **indexable** el contenido dinámico de Sheets (mover carga de datos a build/servidor vs. seguir en cliente): pendiente; con impacto en SEO.
 - **Metadatos y `lang="es"`.** **[Corregido R00-respuesta, H4]** El diagnóstico observa (hecho verificado) que faltan `<title>`/description/OG y que `<html lang="en">` en un sitio en español. Pero **corregirlo no es una decisión confirmada**: las prioridades del diagnóstico son referencia **no vinculante**. Se registra como **propuesta pendiente** de validar y asignar a una ronda, no como acuerdo.
-- **Destino de `docs/` y del código muerto:** pendiente.
+- **Destino del build antiguo en `docs/`, de `.vercel/output/` y del gitlink anidado `juanfuc.github/`:** pendiente. El código muerto identificado en R00 fue eliminado en R01.
 
 ### Preguntas pendientes (requieren respuesta del responsable del proyecto)
 - **[Corregido R00-respuesta, H6] Prioridad de audiencias.** El `README.md` anunciaba que `brief.md` explica «para quién» es el sitio, pero **no existe una prioridad de audiencias confirmada** en el corpus. **No se inventa.** Pregunta abierta: ¿cuál es el público prioritario (pares académicos, comités de evaluación/becas, estudiantes, medios/divulgación, colaboradores de proyectos)? La respuesta condiciona jerarquía de contenidos y metadatos.

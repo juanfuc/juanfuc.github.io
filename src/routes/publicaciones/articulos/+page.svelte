@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { csv } from 'd3-fetch';
   import Icon from '@iconify/svelte';
+  import '$lib/styles/structural.css';
 
   let data = [];
   let isLoading = true;
@@ -13,7 +14,7 @@
       isLoading = false;
     } else {
       let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThq4fhXW3GP7MsfMBrvjUgGN0SV-yQztsRwtWq5kCDpGVJdRAskzi0Mq2GYJuFsqIV4eHp9bfNoqVR/pub?gid=2145965265&single=true&output=csv";
-      
+
       try {
         const fetchedData = await csv(url);
         data = fetchedData;
@@ -37,11 +38,11 @@
   <br><br>
 
   {#each data as item}
-    <div class="card">
-      <div class="card-image">
-        <a href={item.DOI} target='_blank'><img src={item.Imagen} alt={item.Título} loading="lazy" /></a>
+    <div class="list-card">
+      <div class="list-card-media">
+        <a href={item.DOI} target='_blank' rel="noopener noreferrer"><img src={item.Imagen} alt={item.Título} loading="lazy" /></a>
       </div>
-      <div class="card-content">
+      <div class="list-card-body">
         <h2>{item.Título}</h2>
         <p>{item.Revista}</p>
         <p>{item.Volumen}</p>
@@ -56,27 +57,6 @@
 </div>
 
 <style>
-  .container {
-    font-family: "Montserrat", sans-serif;
-    line-height: 1.6;
-    margin: 0 auto;
-    background-color: #e6ebf1;
-    color: #054f6d;
-    text-align: justify;
-    max-width: 1200px;
-    padding: 20px;
-  }
-
-  .card {
-    display: flex;
-    overflow: hidden;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-    scroll-snap-align: start;
-  }
-  
   .back-link {
     color: #f4ba00;
     font-size: 3.5em;
@@ -89,27 +69,15 @@
     transition: all 1.5s ease;
   }
 
-  .card-image {
-    flex: 1;
-    padding: 10px;
-  }
-
-  .card-image img {
+  .list-card-media img {
     max-width: 100%;
     height: auto;
     transition: all 1.5s ease;
   }
 
-  .card-image img:hover {
+  .list-card-media img:hover {
     box-shadow: 0 0 32px #333;
     transform: scale(1);
-  }
-
-  .card-content {
-    flex: 2;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
   }
 
   h1 {
@@ -140,23 +108,12 @@
 
   @media (max-width: 768px) {
 
-    
+
     .container h1 {
       font-size: 1.5em;
     }
-    .card {
-      flex-direction: column;
-      height: auto;
-      padding: 3vw;
-    }
 
-    .card-image,
-    .card-content {
-      flex: 1;
-      width: 100%;
-    }
-
-    .card-image img {
+    .list-card-media img {
       width: 100%;
     }
   }

@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { csv } from 'd3-fetch';
+  import '$lib/styles/structural.css';
 
   let data = [];
   let isLoading = true;
@@ -62,17 +63,6 @@
 </div>
 
 <style>
-  .container {
-    font-family: "Montserrat", sans-serif;
-    line-height: 1.6;
-    margin: 0 auto;
-    background-color: #e6ebf1;
-    color: #054f6d;
-    text-align: justify;
-    max-width: 1200px;
-    padding: 20px;
-  }
-
   .card {
     display: flex;
     overflow: hidden;

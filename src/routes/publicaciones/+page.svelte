@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { csv } from 'd3-fetch';
+  import '$lib/styles/structural.css';
 
   let data = [];
   let isLoading = true;
@@ -38,17 +39,6 @@
 </script>
 
 <style>
-  .container {
-    font-family: "Montserrat", sans-serif;
-    line-height: 1.6;
-    margin: 0 auto;
-    background-color: #e6ebf1;
-    color: #054f6d;
-    text-align: justify;
-    max-width: 1200px;
-    padding: 20px;
-  }
-
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -140,7 +130,7 @@
     {#each data as item (item.indice)}
       <div class="card">
         {#if item.link}
-          <a href={item.link} target='_blank'>
+          <a href={item.link} target='_blank' rel="noopener noreferrer">
             <div class="card-image">
               <img src={item.imagen} alt={`Publicación ${item.indice}`} loading="lazy" />
             </div>
