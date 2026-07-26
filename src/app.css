@@ -1,4 +1,178 @@
+/* Sistema visual — tokens y base global (R02).
+   Conecta la paleta acordada en tokens de color, tipografía autohospedada
+   (IBM Plex: Sans/Mono; sin serifas — todo el sitio usa Sans, con Mono
+   reservado a metadatos/registro), escala y ritmo. Se importa una sola vez
+   desde src/routes/+layout.svelte. */
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/IBMPlexSans-Variable.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/IBMPlexMono-Regular.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/IBMPlexMono-Medium.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215;
+}
+
+:root {
+  /* Fondo casi blanco derivado del azul petróleo original (#054f6d), no el
+     #dbe6e6 del checkpoint 45ae0fd: visto en un navegador real, #dbe6e6 se
+     percibía como una superficie azul, no como un blanco con carácter.
+     #f5f8f9 (corrección previa) seguía leyéndose con demasiado tinte azul;
+     #fbfcfc queda perceptualmente blanco primero. Un solo tono en todo el
+     sitio — nada de panel/superficie distinta para contenedores (ver
+     "Estados de navegación" y .container más abajo). */
+  --color-bg: #fbfcfc;
+  --color-ink: #054f6d;
+
+  /* Ámbar de identidad, el mismo valor exacto del checkpoint 45ae0fd. Se usa
+     como color decorativo/gráfico (subrayado de h1, líneas) y, por decisión
+     explícita del responsable del proyecto, también como color de texto en
+     los estados de navegación (hover/foco/página actual) y en `.back-link`/
+     `.title-link` — así todo el sitio comparte un único amarillo, sin
+     variantes oscurecidas casi idénticas entre sí. Contraste real contra
+     el fondo vigente (--color-bg, #fbfcfc): ~1.72:1, muy por debajo del
+     mínimo AA (4.5:1 texto normal, 3:1 texto grande/UI). Se documenta la
+     cifra para que quede registrada; no se deriva una nueva variante para
+     resolverla (decisión explícita, ver docs/renovacion-perfil/rondas/R02-sistema-visual.md). */
+  --color-accent: #f4ba00;
+  --color-red: #ee4e4e;
+  --color-orange: #e16526;
+  --color-red-ink: #b23838;
+  --color-orange-ink: #a34a16;
+
+  /* Líneas/bordes: variante translúcida directa de --color-ink (mismo azul
+     petróleo, no un tono nuevo), usada para delimitar cajas/fichas/marcos
+     en vez de rellenarlas con una superficie de color distinta. */
+  --color-line: rgba(5, 79, 109, 0.22);
+
+  /* Sistema tipográfico: todo el sitio en Sans (sin serifas, por decisión
+     explícita); mono reservado a metadatos/registro (fecha, volumen, ISBN,
+     tipo) — nunca para párrafos de lectura. La jerarquía entre navegación,
+     títulos y cuerpo se resuelve con peso, tamaño, espaciado y color, no
+     con un cambio de familia. */
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+
+  --fs-meta: 0.8125rem;
+  --fs-ui: 1rem;
+  --fs-body: 1.125rem;
+  --fs-h1: clamp(1.75rem, 1.35rem + 1.8vw, 2.75rem);
+  --fs-h2: clamp(1.15rem, 1.05rem + 0.5vw, 1.5rem);
+  --fs-h3: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+
+  --lh-tight: 1.25;
+  --lh-body: 1.65;
+
+  --measure: 68ch;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  --line-thin: 1px;
+  --line-thick: 2px;
+
+  /* Ritmo único encabezado→contenido: aplicado una sola vez, como
+     margin-bottom del propio <nav> (src/routes/+layout.svelte), para que
+     portada y páginas interiores compartan exactamente el mismo aire tras
+     el encabezado sin repetir el valor en cada página. Responsive: se
+     reduce de forma proporcional en viewports angostos. */
+  --space-header-gap: clamp(4rem, 7vw, 7rem);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-    background-color:#dbe6e6;
-    color: #054f6d;
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  line-height: var(--lh-body);
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Foco visible consistente en todo el sitio (independiente del ratón):
+   solo aparece con teclado/otros medios de foco, nunca en click de ratón.
+   Los elementos de navegación (ver más abajo) sustituyen este contorno
+   genérico por uno coherente con su propio color de estado. */
+:focus-visible {
+  outline: var(--line-thick) solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* Estados de navegación — fuente única de verdad.
+   Cubre: el nombre/enlace a portada y el menú principal (`nav a` en
+   src/routes/+layout.svelte) y las pestañas de sección (`.link` en
+   src/routes/publicaciones/+page.svelte). Se centraliza aquí para que no
+   haya reglas de color/foco divergentes entre este archivo y los
+   componentes locales — los componentes solo definen su propio layout
+   (tamaño, espaciado, mayúsculas), nunca el color de estos estados.
+
+   Regla: el color es la única señal, en las tres situaciones (hover, foco
+   de teclado, página actual). Sin subrayado, sin borde, sin cápsula, sin
+   sombra, sin cambio de tamaño — así "activo" nunca se lee como un botón.
+   Usa `--color-accent` (#f4ba00) directamente, sin oscurecer: el mismo
+   amarillo original, el mismo que el subrayado de los `h1` interiores, por
+   decisión explícita del responsable del proyecto — que prefiere un único
+   amarillo reconocible en todo el sitio a una variante más oscura con
+   mejor contraste mesurable. El foco de teclado añade, además del color,
+   un contorno muy fino del mismo tono — desaparece en cuanto el foco se
+   mueve, por ser `:focus-visible` y no una clase persistente, así que no
+   queda contorno residual tras un clic de ratón ni se confunde con la
+   marca permanente de "página actual" (que es solo color, sin contorno). */
+nav a,
+.link {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+nav a:hover,
+nav a[aria-current='page'],
+.link:hover {
+  color: var(--color-accent);
+}
+
+nav a:focus-visible,
+.link:focus-visible {
+  color: var(--color-accent);
+  outline: 1px solid var(--color-accent);
+  outline-offset: 3px;
 }

@@ -1,48 +1,65 @@
 /* Contenedor estándar de las páginas interiores (perfil, experiencia, publicaciones y sus
    subsecciones, programación). La portada NO usa esta clase: su grilla tiene su propio
-   contenedor local (`.home-grid` en src/routes/+page.svelte) para no heredar estas reglas. */
+   contenedor local (`.home-grid` en src/routes/+page.svelte) para no heredar estas reglas.
+   La tipografía ya no se fija aquí en bloque: cada rol (título, cuerpo, metadato) declara
+   su propia familia (ver src/app.css) — Sans en todo el sitio, Mono solo en metadatos —
+   para que el sistema se aplique por función y no por contenedor.
+   Sin relleno de color propio: se apoya en el mismo fondo casi blanco de <body>
+   (--color-bg) y se delimita con una línea fina, como un marco/ficha de archivo,
+   no como una tarjeta de interfaz sobre una superficie azul distinta. */
 .container {
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.6;
   margin: 0 auto;
-  background-color: #e6ebf1;
-  color: #054f6d;
-  text-align: justify;
+  border: var(--line-thin) solid var(--color-line);
+  color: var(--color-ink);
   max-width: 1200px;
-  padding: 20px;
+  padding: var(--space-7) var(--space-6);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: var(--space-6) var(--space-4);
+  }
 }
 
 /* Tarjeta de lista (imagen o iframe + contenido, en fila) usada por Artículos, Libros,
    Capítulos y Programación. Nombres distintos de `.card`/`.card-image`/`.card-content` a
    propósito: la portada, Publicaciones y Experiencia mantienen sus propias variantes
-   locales con esos nombres y no deben heredar estas reglas. */
+   locales con esos nombres y no deben heredar estas reglas.
+   El ritmo entre entradas se resuelve con una línea fina entre tarjetas consecutivas
+   (no antes de la primera ni después de la última): lectura como registro/ficha de
+   archivo, no como tarjetas sueltas. */
 .list-card {
   display: flex;
   overflow: hidden;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
-  height: 100%;
-  scroll-snap-align: start;
+  width: 100%;
+  padding-block: var(--space-6);
+}
+
+.list-card + .list-card {
+  border-top: var(--line-thin) solid var(--color-line);
 }
 
 .list-card-media {
   flex: 1;
-  padding: 10px;
+  padding: var(--space-4);
 }
 
 .list-card-body {
   flex: 2;
-  padding: 10px;
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
+  gap: var(--space-2);
 }
 
 @media (max-width: 768px) {
   .list-card {
     flex-direction: column;
-    height: auto;
-    padding: 3vw;
+    align-items: stretch;
+    padding-block: var(--space-5);
   }
 
   .list-card-media,

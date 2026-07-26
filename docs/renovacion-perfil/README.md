@@ -9,7 +9,7 @@ Léelos en este orden antes de proponer o escribir nada:
 1. **[`brief.md`](./brief.md)** — qué es el sitio, los acuerdos de dirección ya cerrados y un glosario de términos («En curso», «hilos de investigación», Caja Negra). La **prioridad de audiencias no está confirmada** y figura como pregunta pendiente en `decisiones.md`.
 2. **[`estado-actual.md`](./estado-actual.md)** — cómo está implementado el sitio hoy (stack, rutas, datos, despliegue, problemas vigentes).
 3. **[`decisiones.md`](./decisiones.md)** — decisiones confirmadas vs. propuestas pendientes de validación.
-4. **Documento de la ronda más reciente** — **[`rondas/R01-base-estructural.md`](./rondas/R01-base-estructural.md)**, cerrada y aprobada. **No hay una ronda de implementación activa; la siguiente está pendiente de definición.**
+4. **Documento de la ronda más reciente** — **[`rondas/R02-sistema-visual.md`](./rondas/R02-sistema-visual.md)** (sistema visual), **cerrada y aprobada (2026-07-25)**; empieza por su sección "Estado definitivo al cierre". La anterior, [`rondas/R01-base-estructural.md`](./rondas/R01-base-estructural.md), también está cerrada y aprobada. **No hay ronda de implementación activa — R03 no ha comenzado.**
 
 ## Documentos de contexto (referencia)
 
@@ -21,6 +21,7 @@ Cada ronda es una unidad acotada de trabajo con objetivo y criterios de aceptaci
 
 - **[`rondas/R00-documentacion-inicial.md`](./rondas/R00-documentacion-inicial.md)** — creación de esta documentación (no toca código del sitio). **Cerrada y aprobada.**
 - **[`rondas/R01-base-estructural.md`](./rondas/R01-base-estructural.md)** — primera ronda de implementación (base estructural). **Cerrada y aprobada.**
+- **[`rondas/R02-sistema-visual.md`](./rondas/R02-sistema-visual.md)** — segunda ronda de implementación (sistema visual: tipografía, líneas, estados de interacción). **Implementada — pendiente de revisión.**
 
 ## Reglas de trabajo
 

@@ -4,10 +4,14 @@
 
 <style>
     p {
-        font-family: "Montserrat", sans-serif;
-        font-size: 1.2em;
-        margin: 1% 5%;
-        padding: 1% 5%;
+        font-family: var(--font-sans);
+        font-weight: 400;
+        font-size: var(--fs-body);
+        line-height: var(--lh-body);
+        max-width: var(--measure);
+        margin: 0 auto;
+        text-align: left;
+        white-space: pre-line;
     }
 </style>
 

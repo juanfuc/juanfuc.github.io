@@ -7,23 +7,27 @@
   let data = [];
   let isLoading = true;
 
-  async function consultarAPI() {
-    const cachedData = localStorage.getItem('booksData');
-    if (cachedData) {
-      data = JSON.parse(cachedData);
-      isLoading = false;
-    } else {
-      let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSkGYClXLB0CD0KA30_fGfmmfVqnClIEnvsPh6AD8k_QPdkdlGr3bl3fikK3inXli40qRZng4qqp12n/pub?output=csv";
+  // Copia local primero (si existe) para que la página se vea de inmediato al
+  // navegar, y red siempre en paralelo para refrescarla — nunca al revés, y
+  // nunca vaciando `data` antes de tener algo nuevo que mostrar.
+  const CACHE_KEY = 'booksData';
 
-      try {
-        const fetchedData = await csv(url);
-        data = fetchedData;
-        localStorage.setItem('booksData', JSON.stringify(data));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        isLoading = false;
-      }
+  async function consultarAPI() {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      data = JSON.parse(cached);
+      isLoading = false;
+    }
+
+    let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSkGYClXLB0CD0KA30_fGfmmfVqnClIEnvsPh6AD8k_QPdkdlGr3bl3fikK3inXli40qRZng4qqp12n/pub?output=csv";
+    try {
+      const fetchedData = await csv(url);
+      data = fetchedData;
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      isLoading = false;
     }
   }
 
@@ -33,9 +37,8 @@
 </script>
 
 <div class="container">
-  <a href="/publicaciones" class="back-link"> <Icon icon="material-symbols:arrow-back" /></a>
+  <a href="/publicaciones" class="back-link" aria-label="Volver a Publicaciones"><Icon icon="material-symbols:arrow-back" /></a>
   <h1>Libros</h1>
-  <br><br>
 
   {#each data as item}
     <div class="list-card">
@@ -44,10 +47,10 @@
       </div>
       <div class="list-card-body">
         <h2>{item.Título}</h2>
-        <p>{item.Ciudad}</p>
-        <p>{item.Editorial}</p>
-        <p>{item.Año}</p>
-        <p>ISBN: {item.ISBN}</p>
+        <p class="meta">{item.Ciudad}</p>
+        <p class="meta">{item.Editorial}</p>
+        <p class="meta">{item.Año}</p>
+        <p class="meta">ISBN: {item.ISBN}</p>
         <p class='autor'>{item.Autor}</p>
         <!-- <p class="description">{item.Descripcion}</p> -->
       </div>
@@ -57,63 +60,82 @@
 
 <style>
   .back-link {
-    color: #f4ba00;
-    font-size: 3.5em;
+    display: inline-flex;
+    color: var(--color-ink);
+    font-size: 1.75rem;
+    margin-bottom: var(--space-5);
+    padding: var(--space-2);
+    margin-left: calc(var(--space-2) * -1);
   }
 
-  .back-link:hover {
-    font-size: 3.8em;
-    box-shadow: 0 0 6px #333;
-    transform: scale(1);
-    transition: all 1.5s ease;
+  .back-link:hover,
+  .back-link:focus-visible {
+    color: var(--color-accent);
   }
 
   .list-card-media img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    transition: all 1.5s ease;
   }
 
-  .list-card-media img:hover {
-    box-shadow: 0 0 32px #333;
-    transform: scale(1);
+  @media (hover: hover) and (pointer: fine) {
+    .list-card-media img {
+      transition: filter 0.4s ease;
+      filter: grayscale(100%) brightness(90%);
+    }
+
+    .list-card-media a:hover img,
+    .list-card-media a:focus-visible img {
+      filter: none;
+    }
   }
 
   h1 {
-    margin-bottom: 1px;
-    font-size: 2vw;
-    font-weight: 550;
-    color: #f4ba00;
-    font-family: "Poppins", sans-serif;
+    display: inline-block;
+    margin: var(--space-4) 0 var(--space-6);
+    padding-bottom: var(--space-2);
+    font-size: var(--fs-h1);
+    font-weight: 600;
+    line-height: var(--lh-tight);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    border-bottom: var(--line-thick) solid var(--color-accent);
   }
 
-  h2, p {
-    margin: 5px 0;
+  h2 {
+    margin: 0 0 var(--space-1);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--fs-h2);
+    color: var(--color-ink);
+  }
+
+  .meta {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--fs-meta);
+    letter-spacing: 0.02em;
   }
 
   .autor {
-    font-size: larger;
-    color: #EE4E4E;
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+    border-top: var(--line-thin) solid var(--color-line);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--fs-meta);
+    letter-spacing: 0.02em;
+    color: var(--color-red-ink);
   }
 
   a {
-    color: #E16526;
+    color: var(--color-orange-ink);
     text-decoration: none;
   }
 
-  a:hover {
+  a:hover,
+  a:focus-visible {
     text-decoration: underline;
-  }
-
-  @media (max-width: 768px) {
-
-
-    .container h1 {
-      font-size: 1.5em;
-    }
-
-    .list-card-media img {
-      width: 100%;
-    }
+    text-underline-offset: 3px;
   }
 </style>
