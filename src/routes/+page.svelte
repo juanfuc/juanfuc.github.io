@@ -372,7 +372,7 @@
     flex-direction: column;
     gap: 0.15em;
     padding: var(--space-2) var(--space-3);
-    background: linear-gradient(to top, rgba(5, 79, 109, 0.92) 0%, rgba(5, 79, 109, 0.55) 60%, transparent 100%);
+    background: linear-gradient(to top, rgba(20, 20, 20, 0.92) 0%, rgba(15, 15, 15, 0.55) 60%, transparent 100%);
     color: #fff;
   }
 
